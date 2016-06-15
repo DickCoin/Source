@@ -1,0 +1,11 @@
+[Unit]
+Description=Dickcoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=Dickcoin
+ExecStart=/opt/Dickcoin/Dickcoind
+
+[Install]
+WantedBy=multi-user.target

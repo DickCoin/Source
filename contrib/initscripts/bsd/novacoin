@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: Dickcoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# Dickcoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable Dickcoin service.
+# Dickcoin_config (path): Set to /usr/local/etc/Dickcoin.conf by default.
+# Dickcoin_user:  The user account Dickcoin daemon runs as. It uses 'root' user by default.
+# Dickcoin_group: The group account Dickcoin daemon runs as. It uses 'wheel' group by default.
+# Dickcoin_datadir (str): Default to "/var/db/Dickcoin". Base data directory.
+
+. /etc/rc.subr
+
+name=Dickcoin
+rcvar=Dickcoin_enable
+
+: ${Dickcoin_enable:=NO}
+: ${Dickcoin_config=/usr/local/etc/Dickcoin.conf}
+: ${Dickcoin_datadir=/var/db/Dickcoin}
+: ${Dickcoin_user="root"}
+: ${Dickcoin_group="wheel"}
+
+required_files=${Dickcoin_config}
+command=/usr/local/bin/Dickcoind
+Dickcoin_chdir=${Dickcoin_datadir}
+pidfile="${Dickcoin_datadir}/Dickcoind.pid"
+stop_cmd=Dickcoin_stop
+command_args="-conf=${Dickcoin_config} -datadir=${Dickcoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+Dickcoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${Dickcoin_datadir}
+	[ $? -eq 0 ] && chown -R ${Dickcoin_user}:${Dickcoin_group} ${Dickcoin_datadir}
+}
+
+Dickcoin_prestart()
+{
+	if [ ! -d "${Dickcoin_datadir}/." ]; then
+		Dickcoin_create_datadir || return 1
+	fi
+}
+
+Dickcoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+Dickcoin_stop()
+{
+    Dickcoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${Dickcoin_config} -datadir=${Dickcoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

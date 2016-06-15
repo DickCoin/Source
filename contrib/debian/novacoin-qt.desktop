@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Dickcoin
+Comment=Dickcoin P2P Cryptocurrency
+Comment[ru]=Dickcoin, P2P криптовалюта
+Comment[fr]=Dickcoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Dickcoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/Dickcoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/Dickcoin80.xpm
+MimeType=x-scheme-handler/Dickcoin;
+Categories=Office;

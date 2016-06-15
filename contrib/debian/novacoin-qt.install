@@ -1,0 +1,5 @@
+Dickcoin-qt usr/bin
+share/pixmaps/Dickcoin32.xpm usr/share/pixmaps
+share/pixmaps/Dickcoin80.xpm usr/share/pixmaps
+debian/Dickcoin-qt.desktop usr/share/applications
+debian/Dickcoin-qt.protocol usr/share/kde4/services/

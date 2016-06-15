@@ -1,0 +1,9 @@
+Building Dickcoin
+
+See doc/readme-qt.rst for instructions on building Dickcoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of Dickcoin.
+
+See doc/build-*.txt for instructions on building Dickcoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of Dickcoin.

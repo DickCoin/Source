@@ -1,0 +1,2 @@
+debian/bin/Dickcoind usr/bin
+src/Dickcoind usr/lib/Dickcoin
